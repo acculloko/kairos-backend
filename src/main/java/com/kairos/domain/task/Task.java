@@ -1,11 +1,15 @@
-package com.kairos.model;
+package com.kairos.domain.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kairos.domain.project.Project;
+import com.kairos.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,12 +32,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "project")
-public class Project {
+@Table(name = "task")
+public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@ManyToOne
+	@JoinColumn(name = "project_id")
+	private Project project;
 	
 	@Column(name = "name")
 	@NotBlank
@@ -54,10 +62,11 @@ public class Project {
 	
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
-	private ProjectStatus status;
+	private TaskStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "responsible_user_id")
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private User responsible_user;
 	
 	@Column(name = "creation_date", updatable = false)
@@ -65,26 +74,17 @@ public class Project {
 	@CreationTimestamp
 	private LocalDateTime creation_date;
 	
-	@Column(name = "priority")
-	@Enumerated(EnumType.STRING)
-	private ProjectPriority priority;
-	
 //	Constructors
-	public Project(
-			String name, 
-			String description, 
-			LocalDate start_date, 
-			LocalDate end_date, 
-			ProjectStatus status, 
-			User responsible_user, 
-			ProjectPriority priority) {
+	public Task(Project project, @NotBlank String name, String description, @NotNull LocalDate start_date,
+			@NotNull LocalDate end_date, TaskStatus status, User responsible_user) {
+		super();
+		this.project = project;
 		this.name = name;
 		this.description = description;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.status = status;
 		this.responsible_user = responsible_user;
-		this.priority = priority;
 	}
 	
 }

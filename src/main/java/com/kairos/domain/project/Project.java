@@ -1,11 +1,14 @@
-package com.kairos.model;
+package com.kairos.domain.project;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kairos.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -28,16 +31,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "task")
-public class Task {
+@Table(name = "project")
+public class Project {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@ManyToOne
-	@JoinColumn(name = "project_id")
-	private Project project;
 	
 	@Column(name = "name")
 	@NotBlank
@@ -58,10 +57,11 @@ public class Task {
 	
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
-	private TaskStatus status;
+	private ProjectStatus status;
 	
 	@ManyToOne
 	@JoinColumn(name = "responsible_user_id")
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private User responsible_user;
 	
 	@Column(name = "creation_date", updatable = false)
@@ -69,17 +69,26 @@ public class Task {
 	@CreationTimestamp
 	private LocalDateTime creation_date;
 	
+	@Column(name = "priority")
+	@Enumerated(EnumType.STRING)
+	private ProjectPriority priority;
+	
 //	Constructors
-	public Task(Project project, @NotBlank String name, String description, @NotNull LocalDate start_date,
-			@NotNull LocalDate end_date, TaskStatus status, User responsible_user) {
-		super();
-		this.project = project;
+	public Project(
+			String name, 
+			String description, 
+			LocalDate start_date, 
+			LocalDate end_date, 
+			ProjectStatus status, 
+			User responsible_user, 
+			ProjectPriority priority) {
 		this.name = name;
 		this.description = description;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.status = status;
 		this.responsible_user = responsible_user;
+		this.priority = priority;
 	}
 	
 }

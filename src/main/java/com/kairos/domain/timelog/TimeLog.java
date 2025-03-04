@@ -1,8 +1,13 @@
-package com.kairos.model;
+package com.kairos.domain.timelog;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.kairos.domain.task.Task;
+import com.kairos.domain.user.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,11 +37,13 @@ public class TimeLog {
 	
 	@ManyToOne
 	@JoinColumn(name = "task_id")
+	@OnDelete(action = OnDeleteAction.RESTRICT)
 	@NotNull
 	private Task task;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@NotNull
 	private User user;
 	

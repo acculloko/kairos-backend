@@ -1,8 +1,14 @@
-package com.kairos.model;
+package com.kairos.domain.user;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,8 +32,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "users")
+public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,8 +73,22 @@ public class User {
 	public User(String name, String email, String password, UserRole role) {
 		this.name = name;
 		this.email = email;
-		this.password = password;
+		this.password = new BCryptPasswordEncoder().encode(password);
 		this.role = role;
+	}
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.role == UserRole.ADMIN) {
+			return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+		} else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+
+
+	@Override
+	public String getUsername() {
+		return email;
 	}
 	
 }
