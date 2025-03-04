@@ -1,5 +1,5 @@
 package com.kairos.model;
 
-public enum Role {
+public enum UserRole {
 	ADMIN, USER
 }

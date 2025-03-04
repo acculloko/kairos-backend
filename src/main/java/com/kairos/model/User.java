@@ -3,7 +3,6 @@ package com.kairos.model;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,16 +17,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
 public class User {
 
-//	test
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -58,6 +59,16 @@ public class User {
 	
 	@Column(name = "role")
 	@Enumerated(EnumType.STRING)
-	private Role role;
+	private UserRole role;
+	
+	
+//	Constructors
+	
+	public User(String name, String email, String password, UserRole role) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.role = role;
+	}
 	
 }
