@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kairos.domain.user.User;
-import com.kairos.domain.user.DTO.AuthenticationDTO;
-import com.kairos.domain.user.DTO.LoginResponseDTO;
+import com.kairos.domain.user.dto.AuthenticationDTO;
+import com.kairos.domain.user.dto.LoginResponseDTO;
 import com.kairos.service.UserService;
 import com.kairos.service.security.TokenService;
 

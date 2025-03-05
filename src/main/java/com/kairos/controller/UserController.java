@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kairos.domain.user.User;
-import com.kairos.domain.user.DTO.UserCreationDTO;
+import com.kairos.domain.user.dto.UserCreationDTO;
+import com.kairos.domain.user.dto.UserResponseDTO;
 import com.kairos.mapper.UserMapper;
 import com.kairos.service.UserService;
 
@@ -33,19 +34,27 @@ public class UserController {
 	private UserMapper userMapper;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> getUsers() {
+	public ResponseEntity<List<UserResponseDTO>> getUsers() {
 		List<User> list = userService.getUsers();
+		List<UserResponseDTO> dtoList = userMapper.userListToUserResponseDto(list);
 		
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(dtoList);
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<UserResponseDTO> findUserById(@PathVariable Integer id) {
+		User user = userService.findById(id);
+		UserResponseDTO userDto = userMapper.userToUserResponseDto(user);
+		
+		return ResponseEntity.ok().body(userDto);
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> createUser(@RequestBody @Valid UserCreationDTO data) 
+	public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserCreationDTO data) 
 			throws URISyntaxException {
-		
 		User user = userService.createUser(userMapper.userCreationDtoToUser(data));
 		
-		return ResponseEntity.created(new URI("/user/" + user.getId())).body(user);
+		return ResponseEntity.created(new URI("/user/" + user.getId())).body(userMapper.userToUserResponseDto(user));
 	}
 	
 	@PutMapping("/{id}")
@@ -54,6 +63,7 @@ public class UserController {
 		User user = userMapper.userCreationDtoToUser(data);
 		user.setId(id);
 		userService.updateUser(user);
+		
 		return ResponseEntity.noContent().build();
 	}
 	
@@ -61,6 +71,7 @@ public class UserController {
 	public ResponseEntity<Void> deleteUser(@PathVariable Integer id) 
 			throws URISyntaxException {
 		userService.deleteUserById(id);
+		
 		return ResponseEntity.noContent().build();
 	}
 	

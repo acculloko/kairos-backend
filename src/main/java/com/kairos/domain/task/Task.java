@@ -41,6 +41,7 @@ public class Task {
 	
 	@ManyToOne
 	@JoinColumn(name = "project_id")
+	@OnDelete(action = OnDeleteAction.SET_NULL)
 	private Project project;
 	
 	@Column(name = "name")

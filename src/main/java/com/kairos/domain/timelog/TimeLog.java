@@ -2,6 +2,7 @@ package com.kairos.domain.timelog;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -61,8 +62,9 @@ public class TimeLog {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime end_date;
 	
-	@Column(name = "log_time")
+	@Column(name = "log_time", updatable = false)
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@CreationTimestamp
 	private LocalDateTime log_time;
 
 

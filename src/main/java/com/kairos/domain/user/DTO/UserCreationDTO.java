@@ -1,4 +1,4 @@
-package com.kairos.domain.user.DTO;
+package com.kairos.domain.user.dto;
 
 import com.kairos.domain.user.UserRole;
 
