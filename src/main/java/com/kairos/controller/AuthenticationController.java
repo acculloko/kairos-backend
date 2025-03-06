@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kairos.domain.user.User;
 import com.kairos.domain.user.dto.AuthenticationDTO;
 import com.kairos.domain.user.dto.LoginResponseDTO;
+import com.kairos.mapper.UserMapper;
 import com.kairos.service.UserService;
 import com.kairos.service.security.TokenService;
 
@@ -29,6 +30,9 @@ public class AuthenticationController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
@@ -39,7 +43,11 @@ public class AuthenticationController {
 		
 //		Saves last login to database
 		userService.lastLogin(data.login());
-		return ResponseEntity.ok(new LoginResponseDTO(token));
+		
+		User user = userService.findByEmail(data.login());
+//		LoginResponseDTO loginResponse = userMapper.userToLoginResponseDto(user, token);
+		
+		return ResponseEntity.ok(userMapper.userToLoginResponseDto(user, token));
 	}
 	
 }
