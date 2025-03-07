@@ -52,6 +52,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<UserResponseDTO> createUser(@RequestBody @Valid UserCreationDTO data) 
 			throws URISyntaxException {
+		System.out.println(data.password());
 		User user = userService.createUser(userMapper.userCreationDtoToUser(data));
 		
 		return ResponseEntity.created(new URI("/user/" + user.getId())).body(userMapper.userToUserResponseDto(user));
