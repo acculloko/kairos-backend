@@ -10,6 +10,8 @@ public interface TaskService {
 	
 	public Task findById(Integer id);
 	
+	public List<Task> getTasksByProjectId(Integer id);
+	
 	public Task createTask(Task task, Integer projectId, Integer userId);
 	
 	public void updateTask(Task task, Integer projectId, Integer userId);

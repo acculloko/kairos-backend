@@ -41,10 +41,17 @@ public class TaskController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<TaskResponseDTO> findProjectById(@PathVariable Integer id) {
+	public ResponseEntity<TaskResponseDTO> findTaskById(@PathVariable Integer id) {
 		Task task = taskService.findById(id);
 		
 		return ResponseEntity.ok().body(taskMapper.taskToTaskResponseDto(task));
+	}
+	
+	@GetMapping("/project/{id}")
+	public ResponseEntity<List<TaskResponseDTO>> getTasksByProjectId(@PathVariable Integer id) {
+		List<Task> list = taskService.getTasksByProjectId(id);
+		
+		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
 	}
 	
 	@PostMapping
