@@ -1,5 +1,7 @@
 package com.kairos.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,7 +37,7 @@ public class AuthenticationController {
 	private UserMapper userMapper;
 
 	@PostMapping("/login")
-	public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+	public ResponseEntity<?> login(@RequestBody @Valid AuthenticationDTO data) {
 		var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
 		var auth = this.authenticationManager.authenticate(usernamePassword);
 		
@@ -44,10 +46,10 @@ public class AuthenticationController {
 //		Saves last login to database
 		userService.lastLogin(data.login());
 		
-		User user = userService.findByEmail(data.login());
+//		User user = userService.findByEmail(data.login());
 //		LoginResponseDTO loginResponse = userMapper.userToLoginResponseDto(user, token);
 		
-		return ResponseEntity.ok(userMapper.userToLoginResponseDto(user, token));
+		return ResponseEntity.ok(Map.of("token", token));
 	}
 	
 }
