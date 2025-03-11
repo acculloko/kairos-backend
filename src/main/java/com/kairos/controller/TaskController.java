@@ -61,6 +61,31 @@ public class TaskController {
 		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
 	}
 	
+	@GetMapping("/overdue")
+	public ResponseEntity<List<TaskResponseDTO>> getOverdueTasks() {
+		List<Task> list = taskService.getOverdueTasks();
+		
+		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
+	}
+	
+	@GetMapping("/active")
+	public ResponseEntity<List<TaskResponseDTO>> getActiveTasks() {
+		List<Task> list = taskService.getActiveTasks();
+		
+		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
+	}
+	
+	@GetMapping("/active/total")
+    public ResponseEntity<?> getTotalActiveTasks() {
+		
+        return ResponseEntity.ok().body(taskMapper.numberToTaskCountDto(taskService.getTotalActiveTasks()));
+    }
+
+    @GetMapping("/active/total/user/{id}")
+    public ResponseEntity<?> getTotalActiveTasksByUser(@PathVariable Integer id) {
+    	return ResponseEntity.ok().body(taskMapper.numberToTaskCountDto(taskService.getTotalActiveTasksByUser(id)));
+    }
+	
 	@PostMapping
 	public ResponseEntity<TaskResponseDTO> createTask(@RequestBody @Valid TaskCreationDTO data) 
 			throws URISyntaxException {

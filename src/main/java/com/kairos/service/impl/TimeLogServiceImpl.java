@@ -1,5 +1,6 @@
 package com.kairos.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,34 @@ public class TimeLogServiceImpl implements TimeLogService {
 		Optional<TimeLog> timeLog = timeLogRepository.findById(id);
 		return timeLog.orElse(null);
 	}
+	
+	public double getTotalLoggedHoursByUser(Integer userId) {
+        Long totalSeconds = timeLogRepository.getTotalLoggedSecondsByUser(userId);
+
+        // Convert seconds to hours (decimal)
+        double hours = totalSeconds / 3600.0;
+
+        return hours;
+    }
+
+    // Total logged hours across all users
+    public double getTotalLoggedHours() {
+        Long totalSeconds = timeLogRepository.getTotalLoggedSeconds();
+
+     // Convert seconds to hours (decimal)
+        double hours = totalSeconds / 3600.0;
+
+        return hours;
+    }
+	
+	public double getTotalLoggedHoursByUserByPeriod(Integer userId, LocalDateTime startDate, LocalDateTime endDate) {
+        Long totalSeconds = timeLogRepository.getTotalLoggedSecondsByUserByPeriod(userId, startDate, endDate);
+
+     // Convert seconds to hours (decimal)
+        double hours = totalSeconds / 3600.0;
+
+        return hours;
+    }
 
 	@Override
 	public TimeLog createTimeLog(TimeLog timeLog, Integer taskId, Integer userId) {

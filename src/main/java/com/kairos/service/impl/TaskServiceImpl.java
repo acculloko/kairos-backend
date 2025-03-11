@@ -1,5 +1,7 @@
 package com.kairos.service.impl;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kairos.domain.task.Task;
+import com.kairos.domain.task.TaskStatus;
 import com.kairos.repository.TaskRepository;
 import com.kairos.service.ProjectService;
 import com.kairos.service.TaskService;
@@ -43,6 +46,28 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<Task> getTasksByUserId(Integer id) {
 		return taskRepository.findAllByResponsibleUserId(id);
+	}
+	
+	@Override
+	public List<Task> getOverdueTasks() {
+		List<TaskStatus> excludedStatuses = Arrays.asList(TaskStatus.DONE, TaskStatus.CANCELLED);
+        return taskRepository.findOverdueTasks(LocalDate.now(), excludedStatuses);
+	}
+
+	@Override
+	public List<Task> getActiveTasks() {
+		List<TaskStatus> excludedStatuses = Arrays.asList(TaskStatus.DONE, TaskStatus.CANCELLED);
+        return taskRepository.findAllExceptDoneAndCancelled(excludedStatuses);
+	}
+	
+	@Override
+	public Long getTotalActiveTasks() {
+		return taskRepository.countTasksNotDoneOrCancelled();
+	}
+
+	@Override
+	public Long getTotalActiveTasksByUser(Integer userId) {
+		return taskRepository.countTasksNotDoneOrCancelledByUser(userId);
 	}
 
 	@Override

@@ -2,6 +2,9 @@ package com.kairos.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kairos.domain.timelog.TimeLog;
@@ -26,6 +30,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/timelog")
 public class TimeLogController {
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
 	@Autowired
 	private TimeLogService timeLogService;
@@ -46,6 +51,35 @@ public class TimeLogController {
 		
 		return ResponseEntity.ok().body(timeLogMapper.timeLogToTimeLogResponseDto(timeLog));
 	}
+	
+	// Endpoint to get total logged hours for a specific user
+    @GetMapping("/total-logged-hours/user/{id}")
+    public ResponseEntity<?> getTotalLoggedHoursByUser(@PathVariable Integer id) {
+    	return ResponseEntity.ok().body(timeLogMapper.numberToTotalHoursDto(timeLogService.getTotalLoggedHoursByUser(id)));
+    }
+
+    // Endpoint to get total logged hours for all users
+    @GetMapping("/total-logged-hours")
+    public ResponseEntity<?> getTotalLoggedHours() {
+        return ResponseEntity.ok().body(timeLogMapper.numberToTotalHoursDto(timeLogService.getTotalLoggedHours()));
+    }
+	
+	@GetMapping("/period-logged-hours")
+	public ResponseEntity<?> getTotalLoggedHours(
+	        @RequestParam Integer userId,
+	        @RequestParam String startDate,
+	        @RequestParam String endDate
+	    ) {
+	        // Parse the date without the time
+	        LocalDate start = LocalDate.parse(startDate, FORMATTER);
+	        LocalDate end = LocalDate.parse(endDate, FORMATTER);
+
+	        // Convert to LocalDateTime with 00:00:00 for the start date and 23:59:59 for the end date
+	        LocalDateTime startDateTime = start.atStartOfDay(); // 00:00:00
+	        LocalDateTime endDateTime = end.atTime(23, 59, 59); // 23:59:59
+
+	        return ResponseEntity.ok().body(timeLogMapper.numberToTotalHoursDto(timeLogService.getTotalLoggedHoursByUserByPeriod(userId, startDateTime, endDateTime)));
+	    }
 	
 	@PostMapping
 	public ResponseEntity<TimeLogResponseDTO> createTimeLog(@RequestBody @Valid TimeLogCreationDTO data) 

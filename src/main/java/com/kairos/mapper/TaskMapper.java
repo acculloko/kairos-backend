@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 
 import com.kairos.domain.task.Task;
+import com.kairos.domain.task.dto.TaskCountDTO;
 import com.kairos.domain.task.dto.TaskCreationDTO;
 import com.kairos.domain.task.dto.TaskResponseDTO;
 
@@ -17,5 +18,7 @@ public interface TaskMapper {
 	TaskResponseDTO taskToTaskResponseDto(Task task);
 	
 	List<TaskResponseDTO> taskListToTaskResponseDto(List<Task> tasks);
+	
+	TaskCountDTO numberToTaskCountDto(Long count);
 
 }

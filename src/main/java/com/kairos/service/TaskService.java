@@ -14,6 +14,14 @@ public interface TaskService {
 	
 	public List<Task> getTasksByUserId(Integer id);
 	
+	public List<Task> getOverdueTasks();
+
+	public List<Task> getActiveTasks();
+	
+	public Long getTotalActiveTasks();
+	
+	public Long getTotalActiveTasksByUser(Integer userId);
+	
 	public Task createTask(Task task, Integer projectId, Integer userId);
 	
 	public void updateTask(Task task, Integer projectId, Integer userId);
