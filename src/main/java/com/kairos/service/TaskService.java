@@ -16,7 +16,7 @@ public interface TaskService {
 	
 	public List<Task> getOverdueTasks();
 
-	public List<Task> getActiveTasks();
+	public List<Task> getActiveTasksByUserId(Integer id);
 	
 	public Long getTotalActiveTasks();
 	

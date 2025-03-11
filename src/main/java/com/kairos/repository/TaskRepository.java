@@ -22,8 +22,9 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 			@Param("today") LocalDate today, 
 			@Param("excludedStatuses") List<TaskStatus> excludedStatuses);
 	
-	@Query("SELECT t FROM Task t WHERE t.status NOT IN (:excludedStatuses) ORDER BY t.end_date ASC")
-    List<Task> findAllExceptDoneAndCancelled(@Param("excludedStatuses") List<TaskStatus> excludedStatuses);
+	@Query("SELECT t FROM Task t WHERE t.status NOT IN (:excludedStatuses) AND t.responsible_user.id = :userId ORDER BY t.end_date ASC")
+	List<Task> findAllExceptDoneAndCancelledByUser(@Param("excludedStatuses") List<TaskStatus> excludedStatuses, 
+	                                               @Param("userId") Integer userId);
 	
 	@Query("SELECT COUNT(t) FROM Task t WHERE t.status NOT IN ('DONE', 'CANCELLED')")
     Long countTasksNotDoneOrCancelled();

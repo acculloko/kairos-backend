@@ -68,9 +68,9 @@ public class TaskController {
 		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
 	}
 	
-	@GetMapping("/active")
-	public ResponseEntity<List<TaskResponseDTO>> getActiveTasks() {
-		List<Task> list = taskService.getActiveTasks();
+	@GetMapping("/active/{id}")
+	public ResponseEntity<List<TaskResponseDTO>> getActiveTasksByUser(@PathVariable Integer id) {
+		List<Task> list = taskService.getActiveTasksByUserId(id);
 		
 		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
 	}

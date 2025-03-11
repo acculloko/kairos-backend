@@ -55,9 +55,9 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
-	public List<Task> getActiveTasks() {
+	public List<Task> getActiveTasksByUserId(Integer id) {
 		List<TaskStatus> excludedStatuses = Arrays.asList(TaskStatus.DONE, TaskStatus.CANCELLED);
-        return taskRepository.findAllExceptDoneAndCancelled(excludedStatuses);
+        return taskRepository.findAllExceptDoneAndCancelledByUser(excludedStatuses, id);
 	}
 	
 	@Override
