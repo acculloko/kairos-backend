@@ -12,6 +12,8 @@ public interface TaskService {
 	
 	public List<Task> getTasksByProjectId(Integer id);
 	
+	public List<Task> getTasksByUserId(Integer id);
+	
 	public Task createTask(Task task, Integer projectId, Integer userId);
 	
 	public void updateTask(Task task, Integer projectId, Integer userId);

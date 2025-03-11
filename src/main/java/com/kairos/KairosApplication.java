@@ -2,14 +2,13 @@ package com.kairos;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kairos.domain.project.Project;
 import com.kairos.domain.project.ProjectPriority;
@@ -46,117 +45,88 @@ public class KairosApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-//		User example data
-		User user1 = new User("Lucca Costa", "lucca.costa@wise.com", "senhagamer", UserRole.ADMIN);
-		User user2 = new User("Roger", "roger@wise.com", "12345", UserRole.USER);
-		User user3 = new User("Ronaldo", "ronaldo@wise.com", "12345", UserRole.USER);
-		User user4 = new User("Jefferson", "jefferson@wise.com", "12345", UserRole.USER);
-		
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
-		userRepository.save(user4);
-		
-//		Project example data
-		Project project1 = new Project(
-				"Day-to-day", 
-				"Day-to-day tasks that don't fall into any major projects", 
-				LocalDate.of(2024, 7, 24), 
-				LocalDate.of(2090, 7, 24), 
-				ProjectStatus.ONGOING, 
-				user1, 
-				ProjectPriority.LOW);
-		Project project2 = new Project(
-				"Kairos", 
-				"Time logging web application", 
-				LocalDate.of(2025, 3, 3), 
-				LocalDate.of(2025, 3, 14), 
-				ProjectStatus.ONGOING, 
-				user1, 
-				ProjectPriority.HIGH);
-		Project project3 = new Project(
-				"Kanban", 
-				"Kanban table", 
-				LocalDate.of(2024, 7, 24), 
-				LocalDate.of(2025, 6, 15), 
-				ProjectStatus.ONGOING, 
-				user3, 
-				ProjectPriority.MEDIUM);
-		
-		projectRepository.save(project1);
-		projectRepository.save(project2);
-		projectRepository.save(project3);
-		
-//		Task example data
-		Task task1 = new Task(
-				project2, 
-				"Create database", 
-				"Create database and insert example data", 
-				LocalDate.of(2025, 3, 3), 
-				LocalDate.of(2025, 3, 4), 
-				TaskStatus.ONGOING, 
-				user1);
-		Task task2 = new Task(
-				project3, 
-				"Database maintenance", 
-				"Update kanban tables", 
-				LocalDate.of(2025, 2, 23), 
-				LocalDate.of(2025, 3, 6), 
-				TaskStatus.DONE, 
-				user4);
-		Task task3 = new Task(
-				project1, 
-				"Send out paychecks", 
-				"Self-explanatory", 
-				LocalDate.of(2025, 3, 3), 
-				LocalDate.of(2025, 3, 4), 
-				TaskStatus.CANCELLED, 
-				user2);
-		Task task4 = new Task(
-				project2, 
-				"Frontend development", 
-				"Develop the frontend", 
-				LocalDate.of(2025, 3, 3), 
-				LocalDate.of(2025, 3, 14), 
-				TaskStatus.OPEN, 
-				user1);
-		
-		taskRepository.save(task1);
-		taskRepository.save(task2);
-		taskRepository.save(task3);
-		taskRepository.save(task4);
-		
-//		TimeLog example data
-		
-		TimeLog log1 = new TimeLog(
-				task1, 
-				task1.getResponsible_user(), 
-				"Done!", 
-				LocalDateTime.of(2025, 3, 3, 19, 30), 
-				LocalDateTime.of(2025, 3, 3, 22, 30));
-		TimeLog log2 = new TimeLog(
-				task2, 
-				task2.getResponsible_user(), 
-				"Did about a third of the tables", 
-				LocalDateTime.of(2025, 3, 3, 16, 30), 
-				LocalDateTime.of(2025, 3, 3, 18, 0));
-		TimeLog log3 = new TimeLog(
-				task3, 
-				task3.getResponsible_user(), 
-				"Did something", 
-				LocalDateTime.of(2025, 3, 3, 19, 30), 
-				LocalDateTime.of(2025, 3, 3, 22, 30));
-		TimeLog log4 = new TimeLog(
-				task1, 
-				task1.getResponsible_user(), 
-				"Did a thing", 
-				LocalDateTime.of(2025, 3, 3, 10, 30), 
-				LocalDateTime.of(2025, 3, 3, 11, 30));
-		
-		timeLogRepository.save(log1);
-		timeLogRepository.save(log2);
-		timeLogRepository.save(log3);
-		timeLogRepository.save(log4);
+        // ===================== USERS =====================
+        List<User> users = new ArrayList<>();
+        users.add(new User("Lucca Costa", "lucca.costa@wise.com", "senhagamer", UserRole.ADMIN));
+        users.add(new User("Roger", "roger@wise.com", "12345", UserRole.USER));
+        users.add(new User("Ronaldo", "ronaldo@wise.com", "12345", UserRole.USER));
+        users.add(new User("Jefferson", "jefferson@wise.com", "12345", UserRole.USER));
+        users.add(new User("Sophia Martins", "sophia@wise.com", "pass123", UserRole.USER));
+        users.add(new User("Daniel Smith", "daniel@wise.com", "adminPass", UserRole.ADMIN));
+        users.add(new User("Emma Brown", "emma@wise.com", "test123", UserRole.USER));
+        users.add(new User("Noah White", "noah@wise.com", "securepass", UserRole.USER));
+        users.add(new User("Olivia Wilson", "olivia@wise.com", "welcome123", UserRole.USER));
+        users.add(new User("Liam Green", "liam@wise.com", "mypassword", UserRole.ADMIN));
+        users.add(new User("Ethan Black", "ethan@wise.com", "user123", UserRole.USER));
+        users.add(new User("Ava Thomas", "ava@wise.com", "letmein", UserRole.USER));
+        users.add(new User("Isabella Scott", "isabella@wise.com", "qwerty", UserRole.ADMIN));
+        users.add(new User("Mason Lee", "mason@wise.com", "hello123", UserRole.USER));
+        users.add(new User("Lucas Hall", "lucas@wise.com", "supersecure", UserRole.USER));
+        users.add(new User("Mia Allen", "mia@wise.com", "work123", UserRole.USER));
+        users.add(new User("James Adams", "james@wise.com", "pass4321", UserRole.USER));
+        users.add(new User("Charlotte Hill", "charlotte@wise.com", "easyPass", UserRole.ADMIN));
+        users.add(new User("Benjamin King", "benjamin@wise.com", "access123", UserRole.USER));
+        users.add(new User("William Rivera", "william@wise.com", "testme", UserRole.USER));
+
+        userRepository.saveAll(users);
+
+        // ===================== PROJECTS =====================
+        List<Project> projects = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            projects.add(new Project(
+                    "Project " + i, 
+                    "Description for project " + i, 
+                    LocalDate.of(2024, (i % 12) + 1, (i % 28) + 1), 
+                    LocalDate.of(2026, (i % 12) + 1, (i % 28) + 1), 
+                    switch (i % 4) {
+                        case 0 -> ProjectStatus.PENDING;
+                        case 1 -> ProjectStatus.ONGOING;
+                        case 2 -> ProjectStatus.COMPLETED;
+                        default -> ProjectStatus.CANCELLED;
+                    }, 
+                    users.get(i % users.size()), 
+                    switch (i % 3) {
+                        case 0 -> ProjectPriority.HIGH;
+                        case 1 -> ProjectPriority.MEDIUM;
+                        default -> ProjectPriority.LOW;
+                    }));
+        }
+
+        projectRepository.saveAll(projects);
+
+        // ===================== TASKS =====================
+        List<Task> tasks = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            tasks.add(new Task(
+                    projects.get(i % projects.size()), 
+                    "Task " + i, 
+                    "Details for task " + i, 
+                    LocalDate.of(2025, (i % 12) + 1, (i % 28) + 1), 
+                    LocalDate.of(2025, ((i + 1) % 12) + 1, ((i + 1) % 28) + 1), 
+                    switch (i % 5) {
+                        case 0 -> TaskStatus.OPEN;
+                        case 1 -> TaskStatus.ONGOING;
+                        case 2 -> TaskStatus.DONE;
+                        case 3 -> TaskStatus.PAUSED;
+                        default -> TaskStatus.CANCELLED;
+                    }, 
+                    users.get(i % users.size())));
+        }
+
+        taskRepository.saveAll(tasks);
+
+        // ===================== TIME LOGS =====================
+        List<TimeLog> timeLogs = new ArrayList<>();
+        for (int i = 1; i <= 20; i++) {
+            timeLogs.add(new TimeLog(
+                    tasks.get(i % tasks.size()), 
+                    tasks.get(i % tasks.size()).getResponsible_user(), 
+                    "Worked on task " + i, 
+                    LocalDateTime.of(2025, (i % 12) + 1, (i % 28) + 1, 9, 0), 
+                    LocalDateTime.of(2025, (i % 12) + 1, (i % 28) + 1, 17, 0)));
+        }
+
+        timeLogRepository.saveAll(timeLogs);
 		
 	}
 

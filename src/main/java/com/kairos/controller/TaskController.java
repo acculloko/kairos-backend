@@ -54,6 +54,13 @@ public class TaskController {
 		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
 	}
 	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<List<TaskResponseDTO>> getTasksByUserId(@PathVariable Integer id) {
+		List<Task> list = taskService.getTasksByUserId(id);
+		
+		return ResponseEntity.ok().body(taskMapper.taskListToTaskResponseDto(list));
+	}
+	
 	@PostMapping
 	public ResponseEntity<TaskResponseDTO> createTask(@RequestBody @Valid TaskCreationDTO data) 
 			throws URISyntaxException {
