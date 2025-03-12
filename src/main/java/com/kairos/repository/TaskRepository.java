@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.kairos.domain.task.Task;
 import com.kairos.domain.task.TaskStatus;
+import com.kairos.domain.task.dto.TaskStatusCountDTO;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 
@@ -25,6 +26,9 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 	@Query("SELECT t FROM Task t WHERE t.status NOT IN (:excludedStatuses) AND t.responsible_user.id = :userId ORDER BY t.end_date ASC")
 	List<Task> findAllExceptDoneAndCancelledByUser(@Param("excludedStatuses") List<TaskStatus> excludedStatuses, 
 	                                               @Param("userId") Integer userId);
+	
+	@Query("SELECT new com.kairos.domain.task.dto.TaskStatusCountDTO(t.status, COUNT(t)) FROM Task t WHERE t.project.id = :id GROUP BY t.status")
+	List<TaskStatusCountDTO> countTaskStatusByProjectId(@Param("id") Integer id);
 	
 	@Query("SELECT COUNT(t) FROM Task t WHERE t.status NOT IN ('DONE', 'CANCELLED')")
     Long countTasksNotDoneOrCancelled();

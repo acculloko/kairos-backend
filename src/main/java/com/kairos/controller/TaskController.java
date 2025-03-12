@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kairos.domain.task.Task;
 import com.kairos.domain.task.dto.TaskCreationDTO;
 import com.kairos.domain.task.dto.TaskResponseDTO;
+import com.kairos.domain.task.dto.TaskStatusCountDTO;
+import com.kairos.domain.task.dto.TaskStatusResponseDTO;
 import com.kairos.mapper.TaskMapper;
 import com.kairos.service.TaskService;
 
@@ -46,6 +48,17 @@ public class TaskController {
 		
 		return ResponseEntity.ok().body(taskMapper.taskToTaskResponseDto(task));
 	}
+	
+	@GetMapping("/count-by-status/{id}")
+	public ResponseEntity<TaskStatusResponseDTO> getTaskCountByStatus(@PathVariable Integer id) {
+        List<TaskStatusCountDTO> counts = taskService.getTaskStatusCountsByProjectId(id);
+
+        if (counts.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(new TaskStatusResponseDTO(counts));
+    }
 	
 	@GetMapping("/project/{id}")
 	public ResponseEntity<List<TaskResponseDTO>> getTasksByProjectId(@PathVariable Integer id) {

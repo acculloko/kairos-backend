@@ -62,6 +62,7 @@ public class Task {
 	private LocalDate end_date;
 	
 	@Column(name = "status")
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private TaskStatus status;
 	

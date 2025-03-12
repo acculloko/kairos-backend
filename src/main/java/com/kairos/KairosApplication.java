@@ -72,6 +72,15 @@ public class KairosApplication implements CommandLineRunner {
 
         // ===================== PROJECTS =====================
         List<Project> projects = new ArrayList<>();
+        projects.add(new Project(
+        		"Kairos", 
+        		"Web application designed for time logging, using SQL, Java Spring and Angular", 
+        		LocalDate.of(2025, 03, 11), 
+        		LocalDate.of(2026, 03, 11), 
+        		ProjectStatus.ONGOING, 
+        		users.get(0), 
+        		ProjectPriority.HIGH));
+        
         for (int i = 1; i <= 20; i++) {
             projects.add(new Project(
                     "Project " + i, 
@@ -96,6 +105,63 @@ public class KairosApplication implements CommandLineRunner {
 
         // ===================== TASKS =====================
         List<Task> tasks = new ArrayList<>();
+        tasks.add(new Task(
+        		projects.get(0),
+        		"Create Database",
+        		"Create SQL database for use with the API",
+        		LocalDate.of(2025, 03, 11), 
+        		LocalDate.of(2026, 03, 11),
+        		TaskStatus.DONE,
+        		users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "Develop REST API",
+                "Implement the core REST API endpoints",
+                LocalDate.of(2025, 4, 1),
+                LocalDate.of(2025, 6, 30),
+                TaskStatus.ONGOING,
+                users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "UI Design",
+                "Design wireframes and UI components",
+                LocalDate.of(2025, 2, 15),
+                LocalDate.of(2025, 5, 15),
+                TaskStatus.OPEN,
+                users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "Testing and QA",
+                "Perform unit tests and integration tests",
+                LocalDate.of(2025, 5, 1),
+                LocalDate.of(2025, 7, 1),
+                TaskStatus.PAUSED,
+                users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "Deployment",
+                "Deploy application to production environment",
+                LocalDate.of(2025, 8, 1),
+                LocalDate.of(2025, 8, 15),
+                TaskStatus.CANCELLED,
+                users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "Security Audit",
+                "Conduct a security audit to identify vulnerabilities",
+                LocalDate.of(2025, 6, 10),
+                LocalDate.of(2025, 7, 10),
+                TaskStatus.ONGOING,
+                users.get(0)));
+        tasks.add(new Task(
+                projects.get(0),
+                "Write Documentation",
+                "Prepare API documentation for developers",
+                LocalDate.of(2025, 3, 20),
+                LocalDate.of(2025, 4, 15),
+                TaskStatus.OPEN,
+                users.get(0)));
+        
         for (int i = 1; i <= 20; i++) {
             tasks.add(new Task(
                     projects.get(i % projects.size()), 
@@ -117,6 +183,68 @@ public class KairosApplication implements CommandLineRunner {
 
         // ===================== TIME LOGS =====================
         List<TimeLog> timeLogs = new ArrayList<>();
+        timeLogs.add(new TimeLog(
+                tasks.get(0), 
+                tasks.get(0).getResponsible_user(), 
+                "Initial setup completed.", 
+                LocalDateTime.of(2025, 3, 10, 9, 00), 
+                LocalDateTime.of(2025, 3, 10, 11, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(1), 
+                tasks.get(0).getResponsible_user(), 
+                "Database schema defined.", 
+                LocalDateTime.of(2025, 3, 10, 14, 00), 
+                LocalDateTime.of(2025, 3, 10, 16, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(2), 
+                tasks.get(0).getResponsible_user(), 
+                "Started implementing API endpoints.", 
+                LocalDateTime.of(2025, 3, 11, 10, 00), 
+                LocalDateTime.of(2025, 3, 11, 13, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(3), 
+                tasks.get(0).getResponsible_user(), 
+                "Optimized database queries.", 
+                LocalDateTime.of(2025, 3, 11, 15, 00), 
+                LocalDateTime.of(2025, 3, 11, 17, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(4), 
+                tasks.get(0).getResponsible_user(), 
+                "Tested authentication module.", 
+                LocalDateTime.of(2025, 3, 12, 9, 30), 
+                LocalDateTime.of(2025, 3, 12, 12, 00)));
+        timeLogs.add(new TimeLog(
+                tasks.get(5), 
+                tasks.get(0).getResponsible_user(), 
+                "Fixed API response bugs.", 
+                LocalDateTime.of(2025, 3, 12, 13, 00), 
+                LocalDateTime.of(2025, 3, 12, 15, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(6), 
+                tasks.get(0).getResponsible_user(), 
+                "Reviewed security vulnerabilities.", 
+                LocalDateTime.of(2025, 3, 13, 10, 00), 
+                LocalDateTime.of(2025, 3, 13, 12, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(0), 
+                tasks.get(0).getResponsible_user(), 
+                "Implemented role-based access control.", 
+                LocalDateTime.of(2025, 3, 13, 14, 30), 
+                LocalDateTime.of(2025, 3, 13, 17, 00)));
+        timeLogs.add(new TimeLog(
+                tasks.get(1), 
+                tasks.get(0).getResponsible_user(), 
+                "Conducted final testing.", 
+                LocalDateTime.of(2025, 3, 14, 9, 00), 
+                LocalDateTime.of(2025, 3, 14, 11, 30)));
+        timeLogs.add(new TimeLog(
+                tasks.get(0), 
+                tasks.get(0).getResponsible_user(), 
+                "Prepared project documentation.", 
+                LocalDateTime.of(2025, 3, 14, 13, 30), 
+                LocalDateTime.of(2025, 3, 14, 16, 00)));
+
+        
         for (int i = 1; i <= 20; i++) {
             timeLogs.add(new TimeLog(
                     tasks.get(i % tasks.size()), 

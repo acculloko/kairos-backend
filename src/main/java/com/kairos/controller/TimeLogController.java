@@ -45,6 +45,13 @@ public class TimeLogController {
 		return ResponseEntity.ok().body(timeLogMapper.timeLogListToTimeLogResponseDto(list));
 	}
 	
+	@GetMapping("/user/{id}")
+	public ResponseEntity<List<TimeLogResponseDTO>> getTimeLogsByUserId(@PathVariable Integer id) {
+		List<TimeLog> list = timeLogService.getTimeLogsByUserId(id);
+		
+		return ResponseEntity.ok().body(timeLogMapper.timeLogListToTimeLogResponseDto(list));
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<TimeLogResponseDTO> findTimeLogById(@PathVariable Integer id) {
 		TimeLog timeLog = timeLogService.findById(id);

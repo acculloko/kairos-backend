@@ -31,6 +31,11 @@ public class TimeLogServiceImpl implements TimeLogService {
 	public List<TimeLog> getTimeLogs() {
 		return timeLogRepository.findAll();
 	}
+	
+	@Override
+	public List<TimeLog> getTimeLogsByUserId(Integer id) {
+		return timeLogRepository.findAllByUserId(id);
+	}
 
 	@Override
 	public TimeLog findById(Integer id) {

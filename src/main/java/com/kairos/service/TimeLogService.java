@@ -11,6 +11,8 @@ public interface TimeLogService {
 	
 	public TimeLog findById(Integer id);
 	
+	public List<TimeLog> getTimeLogsByUserId(Integer id);
+	
 	public double getTotalLoggedHours();
 	
 	public double getTotalLoggedHoursByUser(Integer userId);

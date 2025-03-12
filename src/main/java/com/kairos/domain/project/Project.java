@@ -57,6 +57,7 @@ public class Project {
 	
 	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private ProjectStatus status;
 	
 	@ManyToOne
@@ -71,6 +72,7 @@ public class Project {
 	
 	@Column(name = "priority")
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private ProjectPriority priority;
 	
 //	Constructors

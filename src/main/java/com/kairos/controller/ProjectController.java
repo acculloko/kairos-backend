@@ -40,6 +40,13 @@ public class ProjectController {
 		return ResponseEntity.ok().body(projectMapper.projectListToProjectResponseDto(list));
 	}
 	
+	@GetMapping("/active")
+	public ResponseEntity<List<ProjectResponseDTO>> getActiveProjects() {
+		List<Project> list = projectService.getActiveProjects();
+		
+		return ResponseEntity.ok().body(projectMapper.projectListToProjectResponseDto(list));
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<ProjectResponseDTO> findUserById(@PathVariable Integer id) {
 		Project project = projectService.findById(id);

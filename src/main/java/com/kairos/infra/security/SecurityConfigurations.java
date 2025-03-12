@@ -1,7 +1,5 @@
 package com.kairos.infra.security;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +35,8 @@ public class SecurityConfigurations {
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 						.requestMatchers(HttpMethod.POST, "/user").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.PUT, "/user/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.DELETE, "/user/**").hasRole("ADMIN")
 						.anyRequest().authenticated()
 				)
 				.exceptionHandling(e -> e.accessDeniedHandler(accessDeniedHandler)

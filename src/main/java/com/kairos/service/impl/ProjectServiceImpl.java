@@ -24,6 +24,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> getProjects() {
 		return projectRepository.findAll();
 	}
+	
+	@Override
+	public List<Project> getActiveProjects() {
+		return projectRepository.findAllActiveProjects();
+	}
 
 	@Override
 	public Project findById(Integer id) {

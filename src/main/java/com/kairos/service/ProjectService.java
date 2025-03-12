@@ -8,6 +8,8 @@ public interface ProjectService {
 
 	public List<Project> getProjects();
 	
+	public List<Project> getActiveProjects();
+	
 	public Project findById(Integer id);
 	
 	public Project createProject(Project project, Integer userId);

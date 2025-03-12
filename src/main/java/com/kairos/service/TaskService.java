@@ -3,6 +3,7 @@ package com.kairos.service;
 import java.util.List;
 
 import com.kairos.domain.task.Task;
+import com.kairos.domain.task.dto.TaskStatusCountDTO;
 
 public interface TaskService {
 
@@ -17,6 +18,8 @@ public interface TaskService {
 	public List<Task> getOverdueTasks();
 
 	public List<Task> getActiveTasksByUserId(Integer id);
+	
+	public List<TaskStatusCountDTO> getTaskStatusCountsByProjectId(Integer id);
 	
 	public Long getTotalActiveTasks();
 	

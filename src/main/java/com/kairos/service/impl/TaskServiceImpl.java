@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kairos.domain.task.Task;
 import com.kairos.domain.task.TaskStatus;
+import com.kairos.domain.task.dto.TaskStatusCountDTO;
 import com.kairos.repository.TaskRepository;
 import com.kairos.service.ProjectService;
 import com.kairos.service.TaskService;
@@ -59,6 +60,11 @@ public class TaskServiceImpl implements TaskService {
 		List<TaskStatus> excludedStatuses = Arrays.asList(TaskStatus.DONE, TaskStatus.CANCELLED);
         return taskRepository.findAllExceptDoneAndCancelledByUser(excludedStatuses, id);
 	}
+	
+	@Override
+	public List<TaskStatusCountDTO> getTaskStatusCountsByProjectId(Integer id) {
+        return taskRepository.countTaskStatusByProjectId(id);
+    }
 	
 	@Override
 	public Long getTotalActiveTasks() {

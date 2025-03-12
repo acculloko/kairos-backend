@@ -1,6 +1,7 @@
 package com.kairos.repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,9 @@ public interface TimeLogRepository extends JpaRepository<TimeLog, Integer> {
 	        @Param("startDate") LocalDateTime startDate,
 	        @Param("endDate") LocalDateTime endDate
 	    );
+	
+	@Query("SELECT t FROM TimeLog t WHERE t.user.id = :userId")
+    List<TimeLog> findAllByUserId(@Param("userId") Integer userId);
 	
 	@Query("SELECT COALESCE(SUM(TIMESTAMPDIFF(SECOND, t.start_date, t.end_date)), 0) " +
 	           "FROM TimeLog t WHERE t.user.id = :userId")
