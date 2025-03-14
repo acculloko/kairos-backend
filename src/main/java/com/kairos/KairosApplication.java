@@ -48,7 +48,7 @@ public class KairosApplication implements CommandLineRunner {
         // ===================== USERS =====================
         List<User> users = new ArrayList<>();
         users.add(new User("Lucca Costa", "lucca.costa@wise.com", "senhagamer", UserRole.ADMIN));
-        users.add(new User("Roger", "roger@wise.com", "12345", UserRole.USER));
+        users.add(new User("Admin", "admin@wise.com", "admin", UserRole.ADMIN));
         users.add(new User("Ronaldo", "ronaldo@wise.com", "12345", UserRole.USER));
         users.add(new User("Jefferson", "jefferson@wise.com", "12345", UserRole.USER));
         users.add(new User("Sophia Martins", "sophia@wise.com", "pass123", UserRole.USER));
